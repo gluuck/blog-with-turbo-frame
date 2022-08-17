@@ -1,0 +1,9 @@
+<div id="posts">	
+	<% @posts.each do |post|%>
+		<%=turbo_frame_tag post do%>
+			<%= post.title%> 
+			<%= link_to 'destroy', post_path(post), data:{turbo_method: :delete, confirm: 'A you sure?'} %> </br>
+		<% end %>
+	<% end %>
+	<%= link_to 'New post', new_post_path %>
+</div>
