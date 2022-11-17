@@ -1,9 +1,9 @@
-<div id="posts">	
+<div id="posts">
 	<% @posts.each do |post|%>
-		<%=turbo_frame_tag post do%>
-			<%= post.title%> 
-			<%= link_to 'destroy', post_path(post), data:{turbo_method: :delete, confirm: 'A you sure?'} %> </br>
-		<% end %>
+		<%= post.title %>
+		<%= link_to 'show', post_path(post) %>
+		<%= link_to 'edit', edit_post_path(post), data: { turbo_frame: 'modal' } %>
+		<%= link_to 'destroy', post_path(post), data:{turbo_method: :delete, turbo_confirm: 'A you sure?'} %></br>
 	<% end %>
-	<%= link_to 'New post', new_post_path %>
+	<%= link_to 'New post', new_post_path, data: { turbo_frame: 'modal' }  %>
 </div>

@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
   def index
-    posts   
+    posts
   end
 
   def new
@@ -15,7 +15,7 @@ class PostsController < ApplicationController
     @post = Post.new(post_params)
     if @post.save
       redirect_to root_path, notice: 'Post created'
-    else      
+    else
       render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals:{resource: @post})
     end
   end
@@ -35,6 +35,6 @@ class PostsController < ApplicationController
   end
 
   def posts
-    @posts = Post.all 
+    @posts = Post.all
   end
 end
