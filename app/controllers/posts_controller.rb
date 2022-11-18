@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+
   def index
     posts
   end
@@ -12,26 +13,26 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = Post.new(post_params)
-    if @post.save
-      redirect_to root_path, notice: 'Post created'
+    subject = Posts::CreatePost.run post_params
+    if subject.valid?
+      render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals:{:@posts => posts}),
+      turbo_stream.update('notice','Post created')]
     else
-      render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals:{resource: @post})
+      render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals:{resource: subject})
     end
   end
 
   def destroy
-    @post = Post.find(params[:id])
-    @post.delete
+    post = Post.find(params[:id])
+    subject = Posts::DestroyPost.run post: post
     render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals:{:@posts => posts}),
       turbo_stream.update('notice','Post deleted')]
-    #redirect_to root_path, notice: 'Post deleted'
   end
 
   private
 
   def post_params
-    params.fetch(:post, {}).permit(:title, :body)
+    params.require(:post).permit(:title, :body)
   end
 
   def posts
