@@ -3,9 +3,4 @@
 <% @post.comments.each do |comment| %>
   <%= comment.body %><br>
 <% end %>
-<%= form_with model: [@post, @comment] do |f| %>
-	<%= render 'posts/error', resource: f.object%>
-	<%= f.label :body %>
-	<%= f.text_area :body %><br>
-	<%= f.submit %>
-<% end %>
+<%= render partial: 'comments/form', locals: { commentable: @post } %>

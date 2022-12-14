@@ -2,11 +2,9 @@
 
 class CommentsController < ApplicationController
   def create
-    @post = Post.find(params[:post_id])
-    @comment = @post.comments.new(comment_params)
-    # debugger
+    @comment = @commentable.comments.build(comment_params)
     if @comment.save
-      redirect_to post_path(@post)
+      redirect_to post_path(@commentable)
     else
       @comment.errors.full_messages.join(' ')
     end
