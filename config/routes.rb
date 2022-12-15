@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   
   resources :posts do
     post :create_member, to: 'posts#create_member', on: :member
+    post :remove_member, to: 'posts#remove_member', on: :member
     resources :comments, module: :posts, only: %i[create edit destroy]
   end
 end

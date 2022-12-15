@@ -5,7 +5,10 @@
 <% end %>
 <% if @post.users.member.include? current_user %>
   <%= render partial: 'comments/form', locals: { commentable: @post } %>
+  <%= link_to 'Remove member', remove_member_post_path, data:{turbo_method: :post} %>
+<% else %>
+  <%= link_to 'Member', create_member_post_path, data:{turbo_method: :post} %>
 <% end %>
-<%= link_to 'Member', create_member_post_path, data:{turbo_method: :post}  %>
+
 
 <%= @post.users.map(&:email)%>
