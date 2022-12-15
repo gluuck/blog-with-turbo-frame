@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 class PostsController < ApplicationController
+  
   def index
     posts
   end
@@ -10,7 +11,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.find(params[:id])
+    @post = Post.includes(:users, :comments).find(params[:id])
     @comment = @post.comments.build
   end
 
@@ -29,6 +30,13 @@ class PostsController < ApplicationController
     subject = Posts::DestroyPost.run(post:)
     render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
                           turbo_stream.update('notice', 'Post deleted')]
+  end
+
+  def create_member
+    @post = Post.find(params[:id])
+    @post.users << current_user
+    current_user.update_role(current_user, 1)
+    redirect_to @post
   end
 
   private

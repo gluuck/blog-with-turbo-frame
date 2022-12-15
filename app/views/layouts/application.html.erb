@@ -13,7 +13,10 @@
   <body>
     <p id='notice' class="notice"><font color="green"><%= notice %></p></font>
     <p id='alert' class="alert"><%= alert %></p>
-    <%= Time.now %>
+    <% if user_signed_in? %>
+      <%= link_to 'Logout', destroy_user_session_path, data:{ turbo_method: :delete } %>
+      <% end %><br>
+    <%= Time.now %><br>
     <%= yield %>
     <%= turbo_frame_tag :modal %>
   </body>
