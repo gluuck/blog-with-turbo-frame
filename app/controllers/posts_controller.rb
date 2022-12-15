@@ -17,6 +17,7 @@ class PostsController < ApplicationController
 
   def create
     subject = Posts::CreatePost.run post_params
+
     if subject.valid?
       render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
                             turbo_stream.update('notice', 'Post created')]
@@ -27,16 +28,21 @@ class PostsController < ApplicationController
 
   def destroy
     post = Post.find(params[:id])
-    subject = Posts::DestroyPost.run(post:)
+    subject = Posts::DestroyPost.run(post: post) 
+
     render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
                           turbo_stream.update('notice', 'Post deleted')]
   end
 
   def create_member
     @post = Post.find(params[:id])
-    @post.users << current_user
-    current_user.update_role(current_user, 1)
-    redirect_to @post
+    
+    subject  = Posts::CreateMember.run(post: @post, user: current_user)
+    return resource_errors subject unless subject.valid?
+
+    if subject.valid?
+      redirect_to @post
+    end
   end
 
   private
