@@ -2,6 +2,8 @@
 
 class Post < ApplicationRecord
   has_many :comments, dependent: :destroy, as: :commentable
-  has_many :users
+  belongs_to :author, class_name: 'User', optional: true
+  has_many :results
+  has_many :users, through: :results
   validates :title, :body, presence: true
 end

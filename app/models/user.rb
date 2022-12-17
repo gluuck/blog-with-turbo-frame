@@ -4,6 +4,10 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :comments,  dependent: :destroy
+  has_many :results
+  has_many :posts, through: :results
+
   enum role: [:guest, :member, :admin]
 
   def update_role(user, role)

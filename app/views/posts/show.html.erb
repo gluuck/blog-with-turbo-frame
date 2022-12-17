@@ -1,7 +1,8 @@
 <%= @post.title%><br>
 <h3>Comments: </h3>
 <% @post.comments.each do |comment| %>
-  <%= comment.body %><br>
+  <%= comment.body %>
+  <%= comment.user %><br>
 <% end %>
 <% if @post.users.member.include? current_user %>
   <%= render partial: 'comments/form', locals: { commentable: @post } %>
@@ -10,5 +11,7 @@
   <%= link_to 'Member', create_member_post_path, data:{turbo_method: :post} %>
 <% end %>
 
-
-<%= @post.users.map(&:email)%>
+<br>
+<br>
+<h3>Author: </h3>
+<%= @post.author.email%>

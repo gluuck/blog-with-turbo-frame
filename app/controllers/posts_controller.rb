@@ -11,13 +11,13 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = Post.includes(:users, :comments).find(params[:id])
+    @post = Post.includes(:author, :comments).find(params[:id])
     @comment = @post.comments.build
   end
 
   def create
-    subject = Posts::CreatePost.run post_params
-
+    subject = Posts::CreatePost.run post_params.merge(author: current_user)
+    
     if subject.valid?
       render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
                             turbo_stream.update('notice', 'Post created')]
