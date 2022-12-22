@@ -1,9 +1,12 @@
+# frozen_string_literal: true
+
 module Api
   module V1
     class PostsController < Api::BaseController
+      rescue_from ActiveRecord::RecordNotFound, with: :post_not_found
 
       def index
-        render json: posts
+        posts
       end
 
       def new
@@ -11,58 +14,50 @@ module Api
       end
 
       def show
-        @post = Post.includes(:author, :comments).find(params[:id])
-        # render json: :show, status: :ok, location: @post
-        # render_success @post.as_json
+        @post ||= Post.includes(:author, :comments).find(params[:id])
       end
 
       def create
         subject = Posts::CreatePost.run post_params
         return resource_errors subject unless subject.valid?
 
-        if subject.valid?
-          render json: subject
-        end
+        render json: subject if subject.valid?
       end
 
       def destroy
         post = Post.find(params[:id])
         subject = Posts::DestroyPost.run(post: post)
-
-        render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
-                              turbo_stream.update('notice', 'Post deleted')]
       end
 
       def create_member
         @post = Post.find(params[:id])
-
-        subject  = Posts::CreateMember.run(post: @post, user: current_user)
+        subject = Posts::CreateMember.run(post: @post, user: current_user)
         return resource_errors subject unless subject.valid?
 
-        if subject.valid?
-          redirect_to @post
-        end
+        subject
       end
 
       def remove_member
         @post = Post.find(params[:id])
 
-        subject  = Posts::RemoveMember.run(post: @post, user: current_user)
+        subject = Posts::RemoveMember.run(post: @post, user: current_user)
         return resource_errors subject unless subject.valid?
 
-        if subject.valid?
-          redirect_to @post
-        end
+        subject
       end
 
       private
+
+      def post_not_found
+        render_errors(errors: 'Post not found', status: 404)
+      end
 
       def post_params
         params.require(:post).permit(:title, :body)
       end
 
       def posts
-        @posts = Post.all
+        @posts = Post.order(created_at: :desc)
       end
     end
   end

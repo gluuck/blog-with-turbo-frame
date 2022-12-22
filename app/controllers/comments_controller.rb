@@ -3,7 +3,7 @@
 class CommentsController < ApplicationController
   def create
     @comment = @commentable.comments.build(comment_params)
-    
+
     @comment.user = current_user
     if @comment.save
       redirect_to post_path(@commentable)
@@ -14,7 +14,11 @@ class CommentsController < ApplicationController
 
   def edit; end
 
-  def destroy; end
+  def destroy
+    post = Post.find(params[:post_id])
+    comment = Comment.find(params[:id])
+    comment.destroy
+  end
 
   private
 

@@ -9,7 +9,7 @@ Rails.application.routes.draw do
     post :remove_member, to: 'posts#remove_member', on: :member
     resources :comments, module: :posts, only: %i[create edit destroy]
   end
-  namespace :api, defaults:{ format: :json } do
+  namespace :api, defaults: { format: :json } do
     namespace :v1 do
       resources :posts
     end

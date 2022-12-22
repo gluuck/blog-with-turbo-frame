@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+X-Frame-Options: SAMEORIGIN
+X-XSS-Protection: 0
+X-Content-Type-Options: nosniff
+X-Download-Options: noopen
+X-Permitted-Cross-Domain-Policies: none
+Referrer-Policy: strict-origin-when-cross-origin
+Content-Type: application/json; charset=utf-8
+ETag: W/"089ea8a60ca5f8c395d9a5935147b399"
+Cache-Control: max-age=0, private, must-revalidate
+X-Request-Id: 047ffdf7-6fe3-4edc-a568-8bb788a50d5a
+X-Runtime: 0.020722
+Server-Timing: start_processing.action_controller;dur=0.63134765625, sql.active_record;dur=1.559326171875, instantiation.active_record;dur=0.10009765625, process_action.action_controller;dur=4.098876953125
+Transfer-Encoding: chunked
+

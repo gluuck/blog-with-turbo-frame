@@ -5,6 +5,7 @@ module Posts
     object :post
 
     def execute
+      post.users.delete_all
       post.destroy
     end
   end

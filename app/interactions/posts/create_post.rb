@@ -5,7 +5,7 @@ module Posts
     object :author, class: User
     string :title, :body
 
-    def execute  
+    def execute
       post = Post.new inputs
 
       errors.merge! post.errors unless post.save
