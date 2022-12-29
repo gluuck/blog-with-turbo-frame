@@ -67,6 +67,6 @@ class PostsController < ApplicationController
   end
 
   def posts
-    @posts = Post.all
+    @posts = Post.includes(:author, :comments).all
   end
 end
