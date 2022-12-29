@@ -6,4 +6,8 @@ class Post < ApplicationRecord
   has_many :results
   has_many :users, through: :results
   validates :title, :body, presence: true
+
+  def author?(user)
+    self.author == user
+  end
 end

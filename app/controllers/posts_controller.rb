@@ -11,8 +11,12 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
+  def edit
+    @post = Post.find(params[:id])
+  end
+
   def show
-    @post = Post.includes(:author).find(params[:id])
+    @post = Post.find(params[:id])
     @comment = @post.comments.build
   end
 

@@ -2,7 +2,9 @@
 <h3>Comments: </h3>
 <% @post.comments.each do |comment| %>
   <%= comment.body %>
-  <%= comment.user %><br>
+  <% if comment.valid? %>
+    <%= comment.user.email%><br> 
+  <% end %>
 <% end %>
 <% if @post.users.member.include? current_user %>
   <%= render partial: 'comments/form', locals: { commentable: @post } %>
