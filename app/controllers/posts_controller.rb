@@ -38,6 +38,19 @@ class PostsController < ApplicationController
                           turbo_stream.update('notice', 'Post deleted')]
   end
 
+  def update
+    post = Post.find(params[:id])
+    inputs = { post: post}.reverse_merge(params[:post])
+    subject = Posts::UpdatePost.run inputs
+
+    if subject.valid?
+      render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
+                            turbo_stream.update('notice', 'Post updated')]
+    else
+      render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals: { resource: subject })
+    end
+  end
+
   def create_member
     @post = Post.find(params[:id])
 
