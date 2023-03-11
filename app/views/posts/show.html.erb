@@ -1,21 +1,17 @@
-<%= @post.title%><br>
-<h3>Comments: </h3>
-<% @post.comments.each do |comment| %>
-  <%= comment.body %>
-  <% if comment.valid? %>
-    <%= comment.user.email%>
-    <%= button_to 'Delete comment', "#{@post.id}/comments/#{comment.id}", method: :delete  %><br> 
+
+  <%= @post.title%><br>
+  <h3>Comments: </h3>
+  <div id='post'>
+    <%= render partial: 'posts/post_comments', locals:{post: @post}%>
+  </div>
+  <% if @post.users.member.include? current_user %>
+    <%= render partial: 'comments/form', locals: { commentable: @post } %>
+    <%= link_to 'Remove member', remove_member_post_path, data:{turbo_method: :post} %>
+  <% else %>
+    <%= link_to 'Member', create_member_post_path, data:{turbo_method: :post} %>
   <% end %>
 
-<% end %>
-<% if @post.users.member.include? current_user %>
-  <%= render partial: 'comments/form', locals: { commentable: @post } %>
-  <%= link_to 'Remove member', remove_member_post_path, data:{turbo_method: :post} %>
-<% else %>
-  <%= link_to 'Member', create_member_post_path, data:{turbo_method: :post} %>
-<% end %>
-
-<br>
-<br>
-<h3>Author: </h3>
-<%= @post.author.email%>
+  <br>
+  <br>
+  <h3>Author: </h3>
+  <%= @post.author.email%>

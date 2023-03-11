@@ -16,9 +16,13 @@ class CommentsController < ApplicationController
 
   def destroy
     #post = Post.find(params[:post_id])
-    comment = Comment.find(params[:id])
-    comment.destroy
-    redirect_to @commentable
+    #debugger
+    comment = @commentable.comments.find(params[:id])
+    if comment.destroy
+      render turbo_stream: [turbo_stream.update('post', partial: 'posts/post_comments', locals: { post: @commentable }),
+                            turbo_stream.update('notice', 'Comment deleted')]
+    end
+
   end
 
   private

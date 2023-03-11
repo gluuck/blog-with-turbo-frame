@@ -1,0 +1,9 @@
+<% post.comments.includes(:user).each do |comment| %>
+  <%= comment.body %>
+  <% if comment.valid? %>
+    <%= comment.user.email%> <br>
+    <% if comment.author?(current_user) %>
+      <%= link_to 'Delete comment', [post,comment], data:{turbo_method: :delete}  %><br> 
+    <% end %>
+  <% end %>
+<% end %>
