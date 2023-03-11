@@ -26,6 +26,7 @@ class PostsController < ApplicationController
     if subject.valid?
       render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
                             turbo_stream.update('notice', 'Post created')]
+
     else
       render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals: { resource: subject })
     end

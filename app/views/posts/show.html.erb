@@ -3,8 +3,10 @@
 <% @post.comments.each do |comment| %>
   <%= comment.body %>
   <% if comment.valid? %>
-    <%= comment.user.email%><br> 
+    <%= comment.user.email%>
+    <%= button_to 'Delete comment', "#{@post.id}/comments/#{comment.id}", method: :delete  %><br> 
   <% end %>
+
 <% end %>
 <% if @post.users.member.include? current_user %>
   <%= render partial: 'comments/form', locals: { commentable: @post } %>

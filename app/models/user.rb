@@ -17,10 +17,4 @@ class User < ApplicationRecord
       user.update!(role:)
     end
   end
-
-  def change_role(user, role)
-    transaction do
-      user.update!(role:)
-    end
-  end
 end

@@ -6,7 +6,7 @@ class CommentsController < ApplicationController
 
     @comment.user = current_user
     if @comment.save
-      redirect_to post_path(@commentable)
+      redirect_to @commentable
     else
       @comment.errors.full_messages.join(' ')
     end
@@ -15,9 +15,10 @@ class CommentsController < ApplicationController
   def edit; end
 
   def destroy
-    post = Post.find(params[:post_id])
+    #post = Post.find(params[:post_id])
     comment = Comment.find(params[:id])
     comment.destroy
+    redirect_to @commentable
   end
 
   private

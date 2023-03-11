@@ -6,7 +6,7 @@ module Posts
 
     def execute
       post.users.delete(user)
-      user.change_role(user, 0)
+      user.update_role(user, 0)
     end
   end
 end
