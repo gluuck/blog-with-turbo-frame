@@ -30,6 +30,8 @@ gem 'stimulus-rails'
 gem 'active_interaction'
 gem 'interactor'
 gem 'jbuilder'
+gem 'ransack'
+gem 'ffaker'
 # Use Redis adapter to run Action Cable in production
 # gem "redis", "~> 4.0"
 
@@ -74,3 +76,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'webdrivers'
 end
+
+gem "foreman", "~> 0.87.2"

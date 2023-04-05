@@ -1,0 +1,5 @@
+<%= @posts.count %>
+<% @posts.each do |post|%>
+<br>
+  <%= link_to highlight(post.title, params[:q]), post%>
+<% end %>

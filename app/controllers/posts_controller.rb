@@ -25,7 +25,9 @@ class PostsController < ApplicationController
 
     if subject.valid?
       render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
-                            turbo_stream.update('notice', 'Post created')]
+                            turbo_stream.update('notice', 'Post created'),
+                            turbo_stream.update('title', ''),
+                            turbo_stream.update('body',  '' )]
 
     else
       render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals: { resource: subject })
@@ -46,10 +48,17 @@ class PostsController < ApplicationController
 
     if subject.valid?
       render turbo_stream: [turbo_stream.update('posts', template: 'posts/index', locals: { :@posts => posts }),
-                            turbo_stream.update('notice', 'Post updated')]
+                            turbo_stream.update('notice', 'Post updated'),
+                            turbo_stream.update('title', ''),
+                            turbo_stream.update('body',  '' )]
     else
       render turbo_stream: turbo_stream.update('alert', partial: 'posts/error', locals: { resource: subject })
     end
+  end
+
+  def search
+    @posts = Post.filter_by_title(params[:q])
+    render turbo_stream: turbo_stream.update('search_result',  partial: 'posts/search_result', locals: { :@posts => @posts })
   end
 
   def create_member

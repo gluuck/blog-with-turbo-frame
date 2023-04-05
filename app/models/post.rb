@@ -9,6 +9,8 @@ class Post < ApplicationRecord
 
   after_create :create_member
 
+  scope :filter_by_title, ->(title) { where('title LIKE?',"%#{title}%") }
+
   def author?(user)
     self.author == user
   end

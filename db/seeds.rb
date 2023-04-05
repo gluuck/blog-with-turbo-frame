@@ -6,3 +6,7 @@
 #
 #   movies = Movie.create([{ name: "Star Wars" }, { name: "Lord of the Rings" }])
 #   Character.create(name: "Luke", movie: movies.first)
+50.times do
+  user = User.create(email: FFaker::Internet.email, password: '123456')
+  Posts::CreatePost.run ({title: FFaker::Movie.title, body: FFaker::Lorem.sentences.to_s}.merge(author: user))
+end
