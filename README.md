@@ -1,24 +1,16 @@
-# README
+# Blog
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Blog на Ruby on Rails
 
-Things you may want to cover:
+## В проекте используется:
+* Ruby 3.1.2
+* Rails 7.0.1
+* sqlite3
 
-* Ruby version
+## Запуск проекта по классике
+1. Настроить локальное окружение (Ruby etc.)
+2. Скачать или склонировать репозиторий
+3. Запустить bundler и yarn для установки нужных гемов и зависимостей
 
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+```bash
+$ bundle install
